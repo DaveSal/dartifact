@@ -31,6 +31,13 @@ void main() {
       option.text = o.replaceAll('_', '');
       options_container.append(option);
     });
+
+    var template_option = new DivElement();
+    template_option.attributes["data-component-part"] = "option_template";
+    template_option.attributes["data-option-value"]   = "option_template";
+    template_option.text = "option template";
+    options_container.append(template_option);
+
     option_els = options_container.children;
   }
 
@@ -79,6 +86,12 @@ void main() {
       behaviors.addSeparationLine();
       expect(option_els.last.classes, equals([]));
       expect(option_els.first.classes, contains("optionSeparator"));
+    });
+
+    test("moves to top values specified in `top_values`", () {
+      select_comp.top_values = "option_template";
+      behaviors.setTopValues();
+      expect(option_els.first.text, equals("option template"));
     });
 
     group("ajax indicator", () {
